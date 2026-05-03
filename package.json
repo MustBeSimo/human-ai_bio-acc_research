@@ -1,0 +1,11 @@
+{
+  "name": "human-ai-bio-acc-research",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Static research archive for human-AI bio-acceleration notes.",
+  "scripts": {
+    "build": "node -e \"console.log('static archive: no build step')\"",
+    "test": "python3 -m unittest discover -s tests -v && python3 tools/audit_reports.py"
+  },
+  "devDependencies": {}
+}

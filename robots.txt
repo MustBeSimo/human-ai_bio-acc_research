@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mustbesimo.github.io/human-ai_bio-acc_research/sitemap.xml
