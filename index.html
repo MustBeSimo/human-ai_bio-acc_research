@@ -18,13 +18,16 @@
       --muted: #6d7467;
       --sage: #8fa58a;
       --sage-dark: #53664e;
+      --blue: #dbeafe;
+      --blue-strong: #9bb7d4;
+      --blue-ink: #35536f;
+      --mist: #edf5fb;
+      --ink-soft: rgba(21, 23, 19, 0.72);
       --line: var(--border);
       --accent: var(--sage-dark);
       --accent-soft: rgba(143,165,138,0.16);
-      --soft: rgba(143,165,138,0.11);
-      --shadow: 0 20px 50px rgba(35, 42, 31, 0.08);
-      --radius: 18px;
-      --max: 1180px;
+      --shadow: 0 26px 80px rgba(35, 42, 31, 0.10);
+      --max: 1480px;
     }
     * { box-sizing: border-box }
     html { scroll-behavior: smooth }
@@ -33,132 +36,146 @@
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
       background:
-        linear-gradient(to bottom, rgba(21,23,19,0.035) 1px, transparent 1px) 0 0/100% 36px,
-        linear-gradient(to right, rgba(21,23,19,0.03) 1px, transparent 1px) center/36px 100%,
-        radial-gradient(circle at 18% 8%, rgba(143,165,138,0.20), transparent 34%),
+        linear-gradient(to right, rgba(53,83,111,0.055) 1px, transparent 1px) 0 0/72px 100%,
+        linear-gradient(to bottom, rgba(53,83,111,0.045) 1px, transparent 1px) 0 0/100% 44px,
+        radial-gradient(circle at 72% 8%, rgba(219,234,254,0.92), transparent 30%),
+        radial-gradient(circle at 15% 20%, rgba(143,165,138,0.25), transparent 34%),
         var(--bg);
       line-height: 1.6;
     }
     h1, h2, h3 {
       font-family: "Instrument Serif", Georgia, serif;
       font-weight: 400;
-      line-height: 0.98;
-      letter-spacing: -0.035em;
+      line-height: 0.95;
+      letter-spacing: -0.045em;
       margin: 0 0 0.72rem;
     }
     p { margin: 0 0 1rem }
     a { color: var(--accent); text-decoration: none }
     a:hover { text-decoration: underline }
-    .wrap { width: min(calc(100% - 28px), var(--max)); margin: 0 auto }
 
-    .atlas-frame {
-      width: min(calc(100% - 28px), 1440px);
+    .atlas-canvas {
+      width: min(calc(100% - 28px), var(--max));
       margin: 0 auto;
+      padding: 22px 0 58px;
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 28px;
-      padding: 26px 0 56px;
+      grid-template-columns: 86px minmax(0, 1fr);
+      gap: 18px;
     }
-    .atlas-rail {
+    .editorial-spine {
       position: sticky;
-      top: 26px;
+      top: 22px;
       align-self: start;
-      min-height: calc(100vh - 52px);
+      min-height: calc(100vh - 44px);
       border: 1px solid var(--border-strong);
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      background: rgba(255,253,248,0.76);
+      backdrop-filter: blur(14px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      justify-items: center;
+      padding: 16px 10px;
+      box-shadow: 0 18px 50px rgba(35,42,31,0.07);
+    }
+    .spine-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--blue-strong);
+      background: linear-gradient(135deg, var(--sage), var(--blue-strong));
+      color: #fffdf8;
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 1.28rem;
+    }
+    .spine-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.68rem;
+      color: var(--blue-ink);
+      font-weight: 800;
+      margin-top: 18px;
+    }
+    .spine-year {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+    }
+
+    .atlas-sheet {
+      min-width: 0;
+      border: 1px solid var(--border-strong);
+      background: color-mix(in srgb, var(--paper) 90%, transparent);
       box-shadow: var(--shadow);
-      padding: 22px;
+      overflow: clip;
+    }
+    .folio-strip {
+      display: grid;
+      grid-template-columns: 1.25fr repeat(3, minmax(120px, 0.35fr));
+      border-bottom: 1px solid var(--border-strong);
+      background: linear-gradient(90deg, var(--mist), rgba(255,253,248,0.84));
+    }
+    .folio-cell {
+      min-height: 76px;
+      padding: 15px 18px;
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 8px;
     }
-    .rail-mark {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--border-strong);
-      background: var(--sage);
-      color: #fffdf8;
-      display: grid;
-      place-items: center;
-      font-family: "Instrument Serif", Georgia, serif;
-      font-size: 1.28rem;
-      line-height: 1;
-      margin-bottom: 18px;
-    }
-    .rail-title {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-size: 2.25rem;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      margin-bottom: 10px;
-    }
-    .rail-kicker,
-    .eyebrow,
-    .section-label,
-    .card-tag,
-    .stat-label {
+    .folio-cell:last-child { border-right: 0 }
+    .label, .eyebrow, .section-label, .card-tag, .stat-label, .plate-label {
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 0.72rem;
-      font-weight: 700;
+      letter-spacing: 0.13em;
+      font-size: 0.70rem;
+      font-weight: 800;
     }
-    .rail-kicker, .section-label, .stat-label { color: var(--muted) }
-    .rail-copy { color: var(--muted); font-size: 0.92rem; margin-bottom: 24px }
-    .rail-nav { display: grid; gap: 8px; margin: 26px 0 }
-    .rail-nav a {
-      border-top: 1px solid var(--border);
-      color: var(--text);
-      padding: 11px 0;
-      font-size: 0.94rem;
-    }
-    .rail-nav a:hover { color: var(--sage-dark); text-decoration: none }
-    .rail-stats { display: grid; gap: 10px; border-top: 1px solid var(--border-strong); padding-top: 16px }
-    .rail-stat {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-    .rail-stat strong { color: var(--text); font-weight: 700 }
-    .rail-badge {
-      margin-top: 18px;
-      border: 1px solid var(--border-strong);
-      background: var(--surface-2);
-      padding: 12px;
-      color: var(--sage-dark);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-    .atlas-main {
-      min-width: 0;
-      border: 1px solid var(--border-strong);
-      background: color-mix(in srgb, var(--paper) 92%, transparent);
-      box-shadow: var(--shadow);
-    }
+    .label, .section-label, .stat-label { color: var(--muted) }
+    .folio-value { color: var(--text); font-weight: 800; font-size: 0.92rem }
+    .folio-note { color: var(--blue-ink); font-weight: 700; font-size: 0.84rem }
 
     .hero {
-      padding: clamp(42px, 7vw, 88px) clamp(24px, 5vw, 66px) 34px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr);
+      gap: clamp(22px, 4vw, 52px);
+      padding: clamp(38px, 6vw, 84px) clamp(24px, 5vw, 72px) 42px;
       border-bottom: 1px solid var(--border-strong);
       background:
-        linear-gradient(135deg, rgba(255,253,248,0.88), rgba(238,243,233,0.72)),
+        linear-gradient(110deg, rgba(255,253,248,0.94), rgba(237,245,251,0.68) 58%, rgba(238,243,233,0.82)),
         var(--paper);
     }
-    .eyebrow { color: var(--sage-dark); margin-bottom: 16px }
-    .hero h1 { font-size: clamp(3.2rem, 9vw, 7.2rem); max-width: 9ch; margin-bottom: 1.2rem }
+    .eyebrow { color: var(--blue-ink); margin-bottom: 18px }
+    .hero h1 {
+      font-size: clamp(4.4rem, 11vw, 10.5rem);
+      max-width: 8.4ch;
+      margin-bottom: 1.1rem;
+    }
     .hero-dek {
-      font-size: clamp(1.05rem, 1.7vw, 1.28rem);
-      color: var(--muted);
-      max-width: 66ch;
+      font-size: clamp(1.04rem, 1.6vw, 1.32rem);
+      color: var(--ink-soft);
+      max-width: 64ch;
       margin-bottom: 28px;
     }
-    .author-line { display: flex; align-items: center; gap: 12px; margin-bottom: 8px }
-    .author-avatar,
-    .about-avatar {
+    .hero-line {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: start;
+      max-width: 720px;
+      border-top: 1px solid var(--border-strong);
+      padding-top: 18px;
+    }
+    .plate-label { color: var(--sage-dark); line-height: 1.5 }
+    .author-line { display: flex; align-items: center; gap: 12px }
+    .author-avatar, .about-avatar {
       width: 38px;
       height: 38px;
-      border: 1px solid var(--border-strong);
-      background: var(--sage);
+      border: 1px solid var(--blue-strong);
+      background: linear-gradient(135deg, var(--sage), var(--blue-strong));
       color: #fffdf8;
       display: flex;
       align-items: center;
@@ -167,10 +184,68 @@
       font-size: 0.82rem;
       flex: 0 0 auto;
     }
-    .author-name { font-weight: 700; font-size: 0.95rem }
+    .author-name { font-weight: 800; font-size: 0.95rem }
     .author-desc { font-size: 0.85rem; color: var(--muted) }
 
-    #research, #about { padding: 34px clamp(20px, 4vw, 46px) }
+    .specimen-panel {
+      align-self: stretch;
+      border: 1px solid var(--blue-strong);
+      background:
+        linear-gradient(180deg, rgba(219,234,254,0.72), rgba(255,253,248,0.78)),
+        var(--mist);
+      padding: 18px;
+      min-height: 360px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      position: relative;
+    }
+    .specimen-panel::before {
+      content: "";
+      position: absolute;
+      inset: 42px 18px auto auto;
+      width: 43%;
+      height: 1px;
+      background: var(--blue-strong);
+    }
+    .specimen-kicker { color: var(--blue-ink); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase }
+    .specimen-title {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: clamp(2.1rem, 4vw, 4.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 9ch;
+      align-self: center;
+    }
+    .annotation-stack { display: grid; gap: 8px }
+    .annotation {
+      border: 1px solid rgba(155,183,212,0.78);
+      background: rgba(255,253,248,0.72);
+      padding: 10px 11px;
+      font-size: 0.84rem;
+      color: var(--blue-ink);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .annotation strong { color: var(--text) }
+
+    #research, #about { padding: 34px clamp(20px, 4vw, 50px) }
+    .research-ledger {
+      display: grid;
+      grid-template-columns: minmax(170px, 0.35fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .ledger-intro {
+      position: sticky;
+      top: 22px;
+      border: 1px solid var(--border-strong);
+      background: linear-gradient(180deg, var(--surface), var(--mist));
+      padding: 18px;
+    }
+    .ledger-intro h2 { font-size: 2.1rem; margin: 8px 0 12px }
+    .ledger-intro p { color: var(--muted); font-size: 0.92rem }
     .section-label {
       margin-bottom: 18px;
       padding-bottom: 10px;
@@ -183,7 +258,7 @@
       margin-bottom: 20px;
     }
     .research-card {
-      background: var(--surface);
+      background: linear-gradient(180deg, var(--surface), rgba(237,245,251,0.34));
       border: 1px solid var(--border);
       border-radius: 0;
       box-shadow: none;
@@ -192,16 +267,16 @@
       flex-direction: column;
       min-height: 310px;
       transition: border-color 0.18s, background 0.18s, transform 0.18s;
+      position: relative;
     }
+    .research-card:nth-child(3n + 1) { background: linear-gradient(180deg, var(--surface), rgba(238,243,233,0.72)) }
+    .research-card:nth-child(3n + 2) { background: linear-gradient(180deg, #fffdf8, rgba(219,234,254,0.58)) }
     .research-card:hover {
-      border-color: var(--border-strong);
+      border-color: var(--blue-strong);
       background: #fffffb;
       transform: translateY(-2px);
     }
-    .card-tag {
-      color: var(--sage-dark);
-      margin-bottom: 12px;
-    }
+    .card-tag { color: var(--blue-ink); margin-bottom: 12px }
     .research-card h3 { font-size: 1.55rem; margin-bottom: 0.65rem }
     .research-card p { font-size: 0.94rem; color: var(--muted); flex: 1 }
     .card-footer {
@@ -216,33 +291,24 @@
     }
     .card-date { color: var(--muted) }
     .card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end }
-    .card-link,
-    .card-link-sub {
+    .card-link, .card-link-sub {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      border: 1px solid var(--sage-dark);
+      border: 1px solid var(--blue-ink);
       padding: 7px 12px;
       font-size: 0.83rem;
-      font-weight: 700;
+      font-weight: 800;
     }
-    .card-link {
-      background: var(--sage-dark);
-      color: #fffdf8;
-    }
-    .card-link-sub {
-      color: var(--sage-dark);
-      background: transparent;
-      opacity: 0.86;
-    }
-    .card-link:hover,
-    .card-link-sub:hover { text-decoration: none; opacity: 0.88 }
+    .card-link { background: var(--blue-ink); color: #fffdf8 }
+    .card-link-sub { color: var(--blue-ink); background: rgba(255,253,248,0.56); opacity: 0.92 }
+    .card-link:hover, .card-link-sub:hover { text-decoration: none; opacity: 0.88 }
     .card-link svg { width: 13px; height: 13px }
     .card-link-sub svg { width: 11px; height: 11px }
 
     .about-strip {
       border: 1px solid var(--border);
-      background: var(--surface-2);
+      background: linear-gradient(135deg, var(--surface-2), var(--mist));
       padding: 24px;
       display: flex;
       align-items: flex-start;
@@ -253,7 +319,7 @@
     .about-strip h2 { font-size: 1.7rem; margin-bottom: 6px }
     .about-strip p { color: var(--muted); font-size: 0.95rem; margin: 0 }
     .footer {
-      padding: 24px clamp(20px, 4vw, 46px) 32px;
+      padding: 24px clamp(20px, 4vw, 50px) 32px;
       color: var(--muted);
       font-size: 0.88rem;
       border-top: 1px solid var(--border-strong);
@@ -262,15 +328,22 @@
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
+      background: rgba(255,253,248,0.62);
     }
 
-    @media (max-width: 920px) {
-      .atlas-frame { grid-template-columns: 1fr; gap: 14px; padding-top: 14px }
-      .atlas-rail { position: static; min-height: auto }
-      .rail-nav, .rail-stats { display: none }
-      .hero h1 { font-size: clamp(3rem, 16vw, 5.5rem) }
+    @media (max-width: 1080px) {
+      .hero { grid-template-columns: 1fr }
+      .specimen-panel { min-height: 260px }
+      .folio-strip { grid-template-columns: 1fr 1fr }
+      .research-ledger { grid-template-columns: 1fr }
+      .ledger-intro { position: static }
     }
-    @media (max-width: 680px) {
+    @media (max-width: 760px) {
+      .atlas-canvas { grid-template-columns: 1fr; padding-top: 12px }
+      .editorial-spine { position: static; min-height: auto; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr; justify-items: start }
+      .spine-title, .spine-year { writing-mode: initial; transform: none; margin: 0 }
+      .hero h1 { font-size: clamp(3.6rem, 17vw, 6rem) }
+      .hero-line { grid-template-columns: 1fr }
       .research-grid { grid-template-columns: 1fr }
       .card-footer { align-items: flex-start; flex-direction: column }
       .about-strip { flex-direction: column; gap: 14px; padding: 20px }
@@ -281,50 +354,59 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
-
-  <div class="atlas-frame">
-    <aside class="atlas-rail" aria-label="Research archive navigation">
-      <div>
-        <div class="rail-mark">B/A</div>
-        <div class="rail-kicker">Bio/Acc Atlas · Sage edition</div>
-        <div class="rail-title">Evidence-led research archive</div>
-        <p class="rail-copy">Independent reports on biology, fermentation, cognition, and adaptive systems. Designed as an atlas, not a blog roll.</p>
-        <nav class="rail-nav">
-          <a href="#research">Published research</a>
-          <a href="#about">About the archive</a>
-        </nav>
-      </div>
-      <div>
-        <div class="rail-stats">
-          <div class="rail-stat"><span class="stat-label">Reports</span><strong>13</strong></div>
-          <div class="rail-stat"><span class="stat-label">Window</span><strong>2025–2026</strong></div>
-          <div class="rail-stat"><span class="stat-label">Format</span><strong>Static archive</strong></div>
-        </div>
-        <div class="rail-badge">Research is the interface</div>
-      </div>
+  <div class="atlas-canvas">
+    <aside class="editorial-spine" aria-label="Archive spine">
+      <div class="spine-mark">B/A</div>
+      <div class="spine-title">Bio/Acc Atlas · Sage edition</div>
+      <div class="spine-year">2025–2026</div>
     </aside>
 
-    <main class="atlas-main">
-      <section class="hero">
-      <div class="eyebrow">Independent research · biology &amp; adaptive systems</div>
-      <h1>Research hub</h1>
-      <p class="hero-dek">
-        Deep reports on fermentation, microbiology, human adaptive systems, and the
-        intersection of culture and biology. Built to be read, cited, and used.
-      </p>
-      <div class="author-line">
-        <div class="author-avatar">SL</div>
-        <div>
-          <div class="author-name">Simone Leonelli</div>
-          <div class="author-desc">Writer &amp; researcher · Bio/Acc</div>
-        </div>
+    <main class="atlas-sheet">
+      <div class="folio-strip" aria-label="Archive metadata">
+        <div class="folio-cell"><span class="label">Edition</span><span class="folio-note">Bio/Acc Atlas · Sage edition</span></div>
+        <div class="folio-cell"><span class="label">Reports</span><span class="folio-value">13</span></div>
+        <div class="folio-cell"><span class="label">Format</span><span class="folio-value">Static archive</span></div>
+        <div class="folio-cell"><span class="label">Tone</span><span class="folio-value">Sage / pale blue</span></div>
       </div>
-    </section>
 
-    <section id="research">
-      <div class="section-label">Published research</div>
-      <div class="research-grid">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Independent research · biology &amp; adaptive systems</div>
+          <h1>Research hub</h1>
+          <p class="hero-dek">
+            Field notes for adaptive systems. A calmer index for biology, cognition, and cultural protocols.
+            Evidence, source hygiene, and reading order are treated as interface objects, not afterthoughts.
+          </p>
+          <div class="hero-line">
+            <div class="plate-label">Atlas plate 01</div>
+            <div class="author-line">
+              <div class="author-avatar">SL</div>
+              <div>
+                <div class="author-name">Simone Leonelli</div>
+                <div class="author-desc">Writer &amp; researcher · Bio/Acc</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="specimen-panel" aria-label="Editorial atlas specimen panel">
+          <div class="specimen-kicker">Specimen index</div>
+          <div class="specimen-title">Research is the interface</div>
+          <div class="annotation-stack">
+            <div class="annotation"><span>Primary lens</span><strong>Biology × systems</strong></div>
+            <div class="annotation"><span>Reading mode</span><strong>Atlas, not feed</strong></div>
+            <div class="annotation"><span>Quality posture</span><strong>Evidence-gated</strong></div>
+          </div>
+        </aside>
+      </section>
 
+      <section id="research">
+        <div class="research-ledger">
+          <aside class="ledger-intro">
+            <div class="section-label">Published research</div>
+            <h2>Filed reports</h2>
+            <p>Each card is treated like an atlas entry: field, claim surface, date, and route into the full report.</p>
+          </aside>
+          <div class="research-grid">
         <!-- Report 01 -->
         <div class="research-card">
           <div class="card-tag">Fermentation · Anthropology · Microbiology</div>
@@ -669,24 +751,23 @@
             </div>
           </div>
         </div>
-
-      </div>
-    </section>
-
-    <section id="about">
-      <div class="section-label">About</div>
-      <div class="about-strip">
-        <div class="about-avatar">SL</div>
-        <div>
-          <h2>Simone Leonelli</h2>
-          <p>
-            Independent writer and researcher exploring biology, fermentation, microbiology,
-            adaptive systems, and the overlap between human culture and biochemical intelligence.
-            These reports are built for depth — each one attempts to reconstruct a full research
-            picture from primary sources, case studies, and design implications.
-          </p>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section id="about">
+        <div class="section-label">About</div>
+        <div class="about-strip">
+          <div class="about-avatar">SL</div>
+          <div>
+            <h2>Simone Leonelli</h2>
+            <p>
+              Independent writer and researcher exploring biology, fermentation, microbiology,
+              adaptive systems, and the overlap between human culture and biochemical intelligence.
+              These reports are built for depth and are being tightened through explicit research quality gates.
+            </p>
+          </div>
+        </div>
       </section>
 
       <footer class="footer">
@@ -695,6 +776,5 @@
       </footer>
     </main>
   </div>
-
 </body>
 </html>

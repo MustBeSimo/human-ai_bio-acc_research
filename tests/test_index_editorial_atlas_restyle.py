@@ -29,9 +29,9 @@ class IndexEditorialAtlasRestyleTest(unittest.TestCase):
     def test_index_uses_editorial_atlas_shell(self):
         for marker in [
             "Bio/Acc Atlas · Sage edition",
-            "class=\"atlas-frame\"",
-            "class=\"atlas-rail\"",
-            "Evidence-led research archive",
+            "class=\"atlas-canvas\"",
+            "class=\"editorial-spine\"",
+            "Field notes for adaptive systems",
             "Research is the interface",
         ]:
             self.assertIn(marker, self.html)
