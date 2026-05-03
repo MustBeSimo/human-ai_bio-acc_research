@@ -22,12 +22,12 @@
       --blue-strong: #9bb7d4;
       --blue-ink: #35536f;
       --mist: #edf5fb;
-      --ink-soft: rgba(21, 23, 19, 0.72);
+      --ink-soft: rgba(21, 23, 19, 0.76);
       --line: var(--border);
       --accent: var(--sage-dark);
       --accent-soft: rgba(143,165,138,0.16);
-      --shadow: 0 26px 80px rgba(35, 42, 31, 0.10);
-      --max: 1480px;
+      --shadow: 0 30px 90px rgba(35, 42, 31, 0.12);
+      --max: 1540px;
     }
     * { box-sizing: border-box }
     html { scroll-behavior: smooth }
@@ -41,16 +41,18 @@
         radial-gradient(circle at 72% 8%, rgba(219,234,254,0.92), transparent 30%),
         radial-gradient(circle at 15% 20%, rgba(143,165,138,0.25), transparent 34%),
         var(--bg);
-      line-height: 1.6;
+      line-height: 1.65;
+      text-rendering: optimizeLegibility;
     }
     h1, h2, h3 {
       font-family: "Instrument Serif", Georgia, serif;
       font-weight: 400;
-      line-height: 0.95;
+      line-height: 0.96;
       letter-spacing: -0.045em;
       margin: 0 0 0.72rem;
+      text-wrap: pretty;
     }
-    p { margin: 0 0 1rem }
+    p { margin: 0 0 1rem; text-wrap: pretty }
     a { color: var(--accent); text-decoration: none }
     a:hover { text-decoration: underline }
 
@@ -68,13 +70,14 @@
       align-self: start;
       min-height: calc(100vh - 44px);
       border: 1px solid var(--border-strong);
-      background: rgba(255,253,248,0.76);
+      background: rgba(255,253,248,0.80);
       backdrop-filter: blur(14px);
       display: grid;
       grid-template-rows: auto 1fr auto;
       justify-items: center;
       padding: 16px 10px;
       box-shadow: 0 18px 50px rgba(35,42,31,0.07);
+      z-index: 4;
     }
     .spine-mark {
       width: 42px;
@@ -97,13 +100,7 @@
       font-weight: 800;
       margin-top: 18px;
     }
-    .spine-year {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      color: var(--muted);
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-    }
+    .spine-year { writing-mode: vertical-rl; transform: rotate(180deg); color: var(--muted); font-size: 0.78rem; letter-spacing: 0.08em }
 
     .atlas-sheet {
       min-width: 0;
@@ -118,17 +115,9 @@
       border-bottom: 1px solid var(--border-strong);
       background: linear-gradient(90deg, var(--mist), rgba(255,253,248,0.84));
     }
-    .folio-cell {
-      min-height: 76px;
-      padding: 15px 18px;
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 8px;
-    }
+    .folio-cell { min-height: 76px; padding: 15px 18px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; gap: 8px }
     .folio-cell:last-child { border-right: 0 }
-    .label, .eyebrow, .section-label, .card-tag, .stat-label, .plate-label {
+    .label, .eyebrow, .section-label, .card-tag, .stat-label, .plate-label, .card-number, .cover-label {
       text-transform: uppercase;
       letter-spacing: 0.13em;
       font-size: 0.70rem;
@@ -140,211 +129,153 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.72fr);
-      gap: clamp(22px, 4vw, 52px);
-      padding: clamp(38px, 6vw, 84px) clamp(24px, 5vw, 72px) 42px;
+      grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.78fr);
+      gap: clamp(26px, 4vw, 60px);
+      padding: clamp(40px, 6vw, 86px) clamp(24px, 5vw, 76px) 42px;
       border-bottom: 1px solid var(--border-strong);
       background:
-        linear-gradient(110deg, rgba(255,253,248,0.94), rgba(237,245,251,0.68) 58%, rgba(238,243,233,0.82)),
+        linear-gradient(110deg, rgba(255,253,248,0.96), rgba(237,245,251,0.72) 58%, rgba(238,243,233,0.84)),
         var(--paper);
+      position: relative;
+      isolation: isolate;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: clamp(16px, 5vw, 70px);
+      bottom: 20px;
+      width: min(44vw, 560px);
+      height: 1px;
+      background: var(--blue-strong);
+      opacity: 0.78;
     }
     .eyebrow { color: var(--blue-ink); margin-bottom: 18px }
-    .hero h1 {
-      font-size: clamp(4.4rem, 11vw, 10.5rem);
-      max-width: 8.4ch;
-      margin-bottom: 1.1rem;
-    }
-    .hero-dek {
-      font-size: clamp(1.04rem, 1.6vw, 1.32rem);
-      color: var(--ink-soft);
-      max-width: 64ch;
-      margin-bottom: 28px;
-    }
-    .hero-line {
-      display: grid;
-      grid-template-columns: 92px 1fr;
-      gap: 18px;
-      align-items: start;
-      max-width: 720px;
-      border-top: 1px solid var(--border-strong);
-      padding-top: 18px;
-    }
+    .hero h1 { font-size: clamp(4.8rem, 10.8vw, 10.8rem); max-width: 8ch; margin-bottom: 1.1rem }
+    .hero-dek { font-size: clamp(1.06rem, 1.45vw, 1.34rem); color: var(--ink-soft); max-width: 62ch; margin-bottom: 30px; line-height: 1.68 }
+    .hero-line { display: grid; grid-template-columns: 92px 1fr; gap: 18px; align-items: start; max-width: 720px; border-top: 1px solid var(--border-strong); padding-top: 18px }
     .plate-label { color: var(--sage-dark); line-height: 1.5 }
     .author-line { display: flex; align-items: center; gap: 12px }
-    .author-avatar, .about-avatar {
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--blue-strong);
-      background: linear-gradient(135deg, var(--sage), var(--blue-strong));
-      color: #fffdf8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.82rem;
-      flex: 0 0 auto;
-    }
+    .author-avatar, .about-avatar { width: 38px; height: 38px; border: 1px solid var(--blue-strong); background: linear-gradient(135deg, var(--sage), var(--blue-strong)); color: #fffdf8; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.82rem; flex: 0 0 auto }
     .author-name { font-weight: 800; font-size: 0.95rem }
     .author-desc { font-size: 0.85rem; color: var(--muted) }
 
     .specimen-panel {
       align-self: stretch;
       border: 1px solid var(--blue-strong);
-      background:
-        linear-gradient(180deg, rgba(219,234,254,0.72), rgba(255,253,248,0.78)),
-        var(--mist);
+      background: linear-gradient(180deg, rgba(219,234,254,0.72), rgba(255,253,248,0.78)), var(--mist);
       padding: 18px;
-      min-height: 360px;
+      min-height: 430px;
       display: grid;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
       gap: 18px;
       position: relative;
-    }
-    .specimen-panel::before {
-      content: "";
-      position: absolute;
-      inset: 42px 18px auto auto;
-      width: 43%;
-      height: 1px;
-      background: var(--blue-strong);
+      overflow: hidden;
     }
     .specimen-kicker { color: var(--blue-ink); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase }
-    .specimen-title {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-size: clamp(2.1rem, 4vw, 4.2rem);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      max-width: 9ch;
-      align-self: center;
+    .specimen-title { font-family: "Instrument Serif", Georgia, serif; font-size: clamp(2.25rem, 4vw, 4.4rem); line-height: 0.95; letter-spacing: -0.04em; max-width: 9ch }
+    .cover-marquee {
+      display: grid;
+      grid-template-columns: 1fr 0.72fr;
+      grid-template-rows: 170px 112px;
+      gap: 10px;
+      min-height: 292px;
+      perspective: 900px;
     }
+    .cover-tile {
+      margin: 0;
+      border: 1px solid rgba(53,83,111,0.34);
+      background: var(--surface);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 52px rgba(53,83,111,0.14);
+      transform: translate3d(0, var(--parallax-y, 0px), 0);
+      transition: transform 0.2s ease-out;
+    }
+    .cover-tile:first-child { grid-row: span 2 }
+    .cover-tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.9) contrast(1.04) }
+    .cover-label { position: absolute; left: 10px; bottom: 10px; background: rgba(255,253,248,0.84); color: var(--blue-ink); padding: 5px 8px; border: 1px solid rgba(53,83,111,0.24) }
     .annotation-stack { display: grid; gap: 8px }
-    .annotation {
-      border: 1px solid rgba(155,183,212,0.78);
-      background: rgba(255,253,248,0.72);
-      padding: 10px 11px;
-      font-size: 0.84rem;
-      color: var(--blue-ink);
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-    }
+    .annotation { border: 1px solid rgba(155,183,212,0.78); background: rgba(255,253,248,0.72); padding: 10px 11px; font-size: 0.84rem; color: var(--blue-ink); display: flex; justify-content: space-between; gap: 14px }
     .annotation strong { color: var(--text) }
 
-    #research, #about { padding: 34px clamp(20px, 4vw, 50px) }
-    .research-ledger {
-      display: grid;
-      grid-template-columns: minmax(170px, 0.35fr) minmax(0, 1fr);
-      gap: 18px;
-      align-items: start;
-    }
-    .ledger-intro {
-      position: sticky;
-      top: 22px;
-      border: 1px solid var(--border-strong);
-      background: linear-gradient(180deg, var(--surface), var(--mist));
-      padding: 18px;
-    }
-    .ledger-intro h2 { font-size: 2.1rem; margin: 8px 0 12px }
-    .ledger-intro p { color: var(--muted); font-size: 0.92rem }
-    .section-label {
-      margin-bottom: 18px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border-strong);
-    }
-    .research-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
-      gap: 14px;
-      margin-bottom: 20px;
-    }
+    #research, #about { padding: 36px clamp(20px, 4vw, 54px) }
+    .research-ledger { display: grid; grid-template-columns: minmax(190px, 0.28fr) minmax(0, 1fr); gap: 22px; align-items: start }
+    .ledger-intro { position: sticky; top: 22px; border: 1px solid var(--border-strong); background: linear-gradient(180deg, var(--surface), var(--mist)); padding: 18px }
+    .ledger-intro h2 { font-size: 2.35rem; margin: 8px 0 12px }
+    .ledger-intro p { color: var(--muted); font-size: clamp(1rem, 1.08vw, 1.08rem); line-height: 1.7; max-width: 62ch }
+    .section-label { margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--border-strong) }
+    .research-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; margin-bottom: 20px }
     .research-card {
-      background: linear-gradient(180deg, var(--surface), rgba(237,245,251,0.34));
+      background: linear-gradient(180deg, rgba(255,253,248,0.98), rgba(237,245,251,0.36));
       border: 1px solid var(--border);
       border-radius: 0;
-      box-shadow: none;
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      min-height: 310px;
-      transition: border-color 0.18s, background 0.18s, transform 0.18s;
+      box-shadow: 0 18px 45px rgba(35,42,31,0.08);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 520px;
+      transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s;
       position: relative;
+      overflow: hidden;
     }
-    .research-card:nth-child(3n + 1) { background: linear-gradient(180deg, var(--surface), rgba(238,243,233,0.72)) }
-    .research-card:nth-child(3n + 2) { background: linear-gradient(180deg, #fffdf8, rgba(219,234,254,0.58)) }
-    .research-card:hover {
-      border-color: var(--blue-strong);
-      background: #fffffb;
-      transform: translateY(-2px);
-    }
-    .card-tag { color: var(--blue-ink); margin-bottom: 12px }
-    .research-card h3 { font-size: 1.55rem; margin-bottom: 0.65rem }
-    .research-card p { font-size: 0.94rem; color: var(--muted); flex: 1 }
-    .card-footer {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 14px;
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-      font-size: 0.86rem;
-    }
+    .research-card:hover { border-color: var(--blue-strong); background: #fffffb; transform: translateY(-3px); box-shadow: 0 28px 64px rgba(53,83,111,0.14) }
+    .featured-card, .research-card[data-featured="true"] { grid-column: span 2; grid-template-columns: minmax(0, 1fr) minmax(320px, 0.84fr); grid-template-rows: 1fr; min-height: 470px }
+    .featured-card .card-cover, .research-card[data-featured="true"] .card-cover { height: 100%; min-height: 470px }
+    .featured-card .card-body, .research-card[data-featured="true"] .card-body { padding: clamp(26px, 3vw, 42px) }
+    .featured-card h3, .research-card[data-featured="true"] h3 { font-size: clamp(2.5rem, 4.2vw, 4.65rem); max-width: 9.6ch }
+    .card-cover { margin: 0; height: 225px; border-bottom: 1px solid rgba(53,83,111,0.18); background: linear-gradient(135deg, var(--mist), var(--surface-2)); overflow: hidden; position: relative; transform: translate3d(0, var(--parallax-y, 0px), 0); transition: transform 0.2s ease-out }
+    .card-cover-image { width: 100%; height: 112%; object-fit: cover; display: block; filter: saturate(0.92) contrast(1.04); transform: scale(1.02) }
+    .card-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 42%, rgba(15,24,32,0.15)); pointer-events: none }
+    .card-cover figcaption { position: absolute; left: 12px; bottom: 12px; z-index: 1; color: var(--blue-ink); background: rgba(255,253,248,0.84); border: 1px solid rgba(53,83,111,0.22); padding: 5px 8px; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase }
+    .card-cover.is-fallback { display: grid; place-items: center; padding: 18px }
+    .card-cover.is-fallback::before { content: "Bio/Acc"; font-family: "Instrument Serif", Georgia, serif; font-size: 3rem; color: var(--blue-ink); opacity: 0.74 }
+    .card-body { padding: 22px; display: flex; flex-direction: column; min-width: 0 }
+    .card-topline { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px }
+    .card-number { color: var(--sage-dark); white-space: nowrap }
+    .card-tag { color: var(--blue-ink); margin-bottom: 0; line-height: 1.45 }
+    .research-card h3 { font-size: clamp(1.72rem, 2vw, 2.18rem); margin-bottom: 0.78rem; max-width: 11.8ch }
+    .research-card p { font-size: clamp(1rem, 1.08vw, 1.08rem); color: var(--muted); flex: 1; line-height: 1.7; max-width: 62ch }
+    .card-footer { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.88rem }
     .card-date { color: var(--muted) }
     .card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end }
-    .card-link, .card-link-sub {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--blue-ink);
-      padding: 7px 12px;
-      font-size: 0.83rem;
-      font-weight: 800;
-    }
+    .card-link, .card-link-sub { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--blue-ink); padding: 8px 12px; font-size: 0.83rem; font-weight: 800; min-height: 38px }
     .card-link { background: var(--blue-ink); color: #fffdf8 }
-    .card-link-sub { color: var(--blue-ink); background: rgba(255,253,248,0.56); opacity: 0.92 }
+    .card-link-sub { color: var(--blue-ink); background: rgba(255,253,248,0.72); opacity: 0.96 }
     .card-link:hover, .card-link-sub:hover { text-decoration: none; opacity: 0.88 }
     .card-link svg { width: 13px; height: 13px }
     .card-link-sub svg { width: 11px; height: 11px }
 
-    .about-strip {
-      border: 1px solid var(--border);
-      background: linear-gradient(135deg, var(--surface-2), var(--mist));
-      padding: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 22px;
-    }
+    .about-strip { border: 1px solid var(--border); background: linear-gradient(135deg, var(--surface-2), var(--mist)); padding: 26px; display: flex; align-items: flex-start; gap: 18px; margin-bottom: 22px }
     .about-avatar { width: 52px; height: 52px; font-size: 1rem }
-    .about-strip h2 { font-size: 1.7rem; margin-bottom: 6px }
-    .about-strip p { color: var(--muted); font-size: 0.95rem; margin: 0 }
-    .footer {
-      padding: 24px clamp(20px, 4vw, 50px) 32px;
-      color: var(--muted);
-      font-size: 0.88rem;
-      border-top: 1px solid var(--border-strong);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      background: rgba(255,253,248,0.62);
-    }
+    .about-strip h2 { font-size: 1.85rem; margin-bottom: 6px }
+    .about-strip p { color: var(--muted); font-size: clamp(1rem, 1.08vw, 1.08rem); line-height: 1.7; max-width: 78ch; margin: 0 }
+    .footer { padding: 24px clamp(20px, 4vw, 50px) 32px; color: var(--muted); font-size: 0.88rem; border-top: 1px solid var(--border-strong); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; background: rgba(255,253,248,0.62) }
 
-    @media (max-width: 1080px) {
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto }
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important }
+      [data-parallax] { transform: none !important }
+    }
+    @media (max-width: 1180px) {
       .hero { grid-template-columns: 1fr }
-      .specimen-panel { min-height: 260px }
+      .specimen-panel { min-height: auto }
       .folio-strip { grid-template-columns: 1fr 1fr }
       .research-ledger { grid-template-columns: 1fr }
       .ledger-intro { position: static }
+      .research-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+    }
+    @media (max-width: 860px) {
+      .featured-card, .research-card[data-featured="true"] { grid-column: span 1; grid-template-columns: 1fr; min-height: 0 }
+      .featured-card .card-cover, .research-card[data-featured="true"] .card-cover { min-height: 260px }
+      .research-grid { grid-template-columns: 1fr }
+      .cover-marquee { grid-template-columns: 1fr 1fr; grid-template-rows: 160px 120px }
+      .cover-tile:first-child { grid-column: span 2; grid-row: span 1 }
     }
     @media (max-width: 760px) {
       .atlas-canvas { grid-template-columns: 1fr; padding-top: 12px }
       .editorial-spine { position: static; min-height: auto; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr; justify-items: start }
       .spine-title, .spine-year { writing-mode: initial; transform: none; margin: 0 }
-      .hero h1 { font-size: clamp(3.6rem, 17vw, 6rem) }
+      .hero h1 { font-size: clamp(3.7rem, 17vw, 6.2rem) }
       .hero-line { grid-template-columns: 1fr }
-      .research-grid { grid-template-columns: 1fr }
       .card-footer { align-items: flex-start; flex-direction: column }
       .about-strip { flex-direction: column; gap: 14px; padding: 20px }
     }
@@ -391,9 +322,14 @@
         <aside class="specimen-panel" aria-label="Editorial atlas specimen panel">
           <div class="specimen-kicker">Specimen index</div>
           <div class="specimen-title">Research is the interface</div>
+          <div class="cover-marquee" aria-label="Substack cover image preview wall">
+            <figure class="cover-tile" data-parallax="0.11"><img src="https://substackcdn.com/image/fetch/$s_!rgZr!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F06f778fd-3595-4d3f-b3e1-b4ab38a55de4_1536x1024.png" alt="Fermentation Rituals Substack cover" loading="eager" decoding="async"><figcaption class="cover-label">Cover 01</figcaption></figure>
+            <figure class="cover-tile" data-parallax="0.07"><img src="https://substackcdn.com/image/fetch/$s_!uJI_!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F033a7a19-f540-45af-9a1f-b49b81e40fa6_2816x1536.jpeg" alt="Music Telemetry Substack cover" loading="lazy" decoding="async"><figcaption class="cover-label">Cover 02</figcaption></figure>
+            <figure class="cover-tile" data-parallax="0.05"><img src="https://substackcdn.com/image/fetch/$s_!nvyz!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45e9ab31-78dc-4f7b-9b17-06ba77cc308d_2752x1536.heic" alt="Attunement Substack cover" loading="lazy" decoding="async"><figcaption class="cover-label">Cover 03</figcaption></figure>
+          </div>
           <div class="annotation-stack">
             <div class="annotation"><span>Primary lens</span><strong>Biology × systems</strong></div>
-            <div class="annotation"><span>Reading mode</span><strong>Atlas, not feed</strong></div>
+            <div class="annotation"><span>Reading mode</span><strong>Image-led atlas</strong></div>
             <div class="annotation"><span>Quality posture</span><strong>Evidence-gated</strong></div>
           </div>
         </aside>
@@ -408,8 +344,14 @@
           </aside>
           <div class="research-grid">
         <!-- Report 01 -->
-        <div class="research-card">
-          <div class="card-tag">Fermentation · Anthropology · Microbiology</div>
+        <div class="research-card" data-featured="true">
+          <figure class="card-cover" data-parallax="0.5" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!rgZr!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F06f778fd-3595-4d3f-b3e1-b4ab38a55de4_1536x1024.png" alt="Fermentation Rituals as Adaptive Protocols Substack cover" loading="eager" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 01</span>
+<div class="card-tag">Fermentation · Anthropology · Microbiology</div></div>
           <h3>Fermentation Rituals as Adaptive Protocols</h3>
           <p>
             Across time and geography, fermentation repeatedly emerged as a socially governed,
@@ -432,11 +374,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 02 -->
         <div class="research-card">
-          <div class="card-tag">Machine/Human · Identity Systems</div>
+          <figure class="card-cover" data-parallax="0.6" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!uJI_!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F033a7a19-f540-45af-9a1f-b49b81e40fa6_2816x1536.jpeg" alt="Music Is Not Taste. It Is Telemetry. Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 02</span>
+<div class="card-tag">Machine/Human · Identity Systems</div></div>
           <h3>Music Is Not Taste. It Is Telemetry.</h3>
           <p>
             When an AI infers your music taste, it is performing identity compression —
@@ -459,11 +408,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 03 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Adaptive Systems</div>
+          <figure class="card-cover" data-parallax="0.7" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!nvyz!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45e9ab31-78dc-4f7b-9b17-06ba77cc308d_2752x1536.heic" alt="From Optimization to Attunement Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 03</span>
+<div class="card-tag">Rite ↯ Recode · Adaptive Systems</div></div>
           <h3>From Optimization to Attunement</h3>
           <p>
             The optimization paradigm treats the body as a machine to be maximized.
@@ -486,11 +442,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 04 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Chronobiology</div>
+          <figure class="card-cover" data-parallax="0.8" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!24jc!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe904d0b1-f9f6-4f6e-8471-0d02353d2a3b_2368x1792.heic" alt="Seasonal Cognition: Four Hormonal Modes of a Year Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 04</span>
+<div class="card-tag">Rite ↯ Recode · Chronobiology</div></div>
           <h3>Seasonal Cognition: Four Hormonal Modes of a Year</h3>
           <p>
             Spring = dopamine · Summer = serotonin · Autumn = acetylcholine · Winter = melatonin.
@@ -512,11 +475,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 05 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Bioelectricity</div>
+          <figure class="card-cover" data-parallax="0.4" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!73HO!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F598674bd-36f4-4bed-8d2b-fae213b6de88_1392x752.heic" alt="Bioelectric Rituals × Parallel Minds Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 05</span>
+<div class="card-tag">Rite ↯ Recode · Bioelectricity</div></div>
           <h3>Bioelectric Rituals × Parallel Minds</h3>
           <p>
             Cortisol at dawn. Dopamine pulses. Neural waves weaving through focus and flow.
@@ -538,11 +508,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 06 -->
         <div class="research-card">
-          <div class="card-tag">Machine/Human · Neuroendocrinology</div>
+          <figure class="card-cover" data-parallax="0.5" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!TenD!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F235ca668-1f36-42c2-ba30-c561442e2ba2_1536x1024.heic" alt="AI × Testosterone: Unlocking Peak Performance Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 06</span>
+<div class="card-tag">Machine/Human · Neuroendocrinology</div></div>
           <h3>AI × Testosterone: Unlocking Peak Performance</h3>
           <p>
             Testosterone is not a gym hormone — it is a systemic optimization signal
@@ -565,11 +542,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 07 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Sleep Architecture</div>
+          <figure class="card-cover" data-parallax="0.6" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!9LdT!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4dee967-3f1b-475e-a0b1-4994f0cf0dd3_1536x1024.heic" alt="Delta Engineering: Designing Your Night to Train Tomorrow&#x27;s Brain Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 07</span>
+<div class="card-tag">Rite ↯ Recode · Sleep Architecture</div></div>
           <h3>Delta Engineering: Designing Your Night to Train Tomorrow's Brain</h3>
           <p>
             Your morning mind is compiled the night before. Delta waves (0.5–4 Hz)
@@ -592,11 +576,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 08 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Neurophysiology</div>
+          <figure class="card-cover" data-parallax="0.7" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!UVBr!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7f64c181-01b2-4990-a23f-347920ec2ef4_1536x1024.heic" alt="Brain Waves 101: Delta, Theta, Alpha, Beta, Gamma Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 08</span>
+<div class="card-tag">Rite ↯ Recode · Neurophysiology</div></div>
           <h3>Brain Waves 101: Delta, Theta, Alpha, Beta, Gamma</h3>
           <p>
             Brainwave bands are not states of consciousness — they are operating frequencies,
@@ -619,11 +610,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 09 -->
         <div class="research-card">
-          <div class="card-tag">Rite ↯ Recode · Neuroplasticity</div>
+          <figure class="card-cover" data-parallax="0.8" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!klzf!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff24ac617-ec45-41c8-810b-62da67b7539a_1248x832.heic" alt="Rewire Your Brain → Rebuild Your Body Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 09</span>
+<div class="card-tag">Rite ↯ Recode · Neuroplasticity</div></div>
           <h3>Rewire Your Brain → Rebuild Your Body</h3>
           <p>
             Neuroplasticity is mechanistic, not metaphorical — LTP, BDNF, adult
@@ -646,11 +644,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 10 -->
         <div class="research-card">
-          <div class="card-tag">Bio-Hack // Body-Hack · Circadian Biology</div>
+          <figure class="card-cover" data-parallax="0.4" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!z3nN!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3ede05c1-5f08-4288-b21b-e540ebfc9648_1248x832.heic" alt="Sunrise as Operating System Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 10</span>
+<div class="card-tag">Bio-Hack // Body-Hack · Circadian Biology</div></div>
           <h3>Sunrise as Operating System</h3>
           <p>
             The first hour after waking is the most potent pharmacological intervention
@@ -673,11 +678,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 11 -->
         <div class="research-card">
-          <div class="card-tag">Bio-Hack // Body-Hack · Microbiome Engineering</div>
+          <figure class="card-cover" data-parallax="0.5" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!wrz-!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb7a7179b-6a50-4a3a-8d3f-71a7184d3830_1248x832.heic" alt="Ancient Craft to AI Bio-Design: Rewriting Your Gut Health Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 11</span>
+<div class="card-tag">Bio-Hack // Body-Hack · Microbiome Engineering</div></div>
           <h3>Ancient Craft to AI Bio-Design: Rewriting Your Gut Health</h3>
           <p>
             The gut microbiome produces 90% of the body's serotonin and acts as a
@@ -700,11 +712,18 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 12 -->
         <div class="research-card">
-          <div class="card-tag">Bio-Hack // Body-Hack · Nutritional Pharmacology</div>
+          <figure class="card-cover" data-parallax="0.6" data-cover-source="substack-og-image">
+            <img class="card-cover-image" src="https://substackcdn.com/image/fetch/$s_!PqBz!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc718644d-d086-4466-a9f2-1c9d0b5ba67e_1248x832.heic" alt="EVOO: Your Daily Dose of Edible Biotech Substack cover" loading="lazy" decoding="async" />
+            <figcaption>Substack cover</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 12</span>
+<div class="card-tag">Bio-Hack // Body-Hack · Nutritional Pharmacology</div></div>
           <h3>EVOO: Your Daily Dose of Edible Biotech</h3>
           <p>
             Extra virgin olive oil is a pharmacological agent. Oleocanthal acts as a
@@ -727,11 +746,17 @@
               </a>
             </div>
           </div>
+          </div>
         </div>
 
         <!-- Report 13 -->
         <div class="research-card">
-          <div class="card-tag">Bio-Hack // Body-Hack · Nutritional Science</div>
+          <figure class="card-cover is-fallback" data-parallax="0.05">
+            <figcaption>Archive plate</figcaption>
+          </figure>
+          <div class="card-body">
+            <div class="card-topline"><span class="card-number">Report 13</span>
+<div class="card-tag">Bio-Hack // Body-Hack · Nutritional Science</div></div>
           <h3>Mediterranean Diet: Evidence-Based Biotech You Can Eat</h3>
           <p>
             60 years of peer-review distilled into one field guide for heart, brain &amp; gut.
@@ -767,6 +792,7 @@
               These reports are built for depth and are being tightened through explicit research quality gates.
             </p>
           </div>
+          </div>
         </div>
       </section>
 
@@ -776,5 +802,35 @@
       </footer>
     </main>
   </div>
+
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const items = Array.from(document.querySelectorAll("[data-parallax]"));
+      if (reduceMotion.matches || !items.length) return;
+
+      let ticking = false;
+      const update = () => {
+        const viewport = window.innerHeight || 1;
+        for (const item of items) {
+          const rect = item.getBoundingClientRect();
+          const strength = Number(item.dataset.parallax || 0.06);
+          const progress = ((rect.top + rect.height / 2) - viewport / 2) / viewport;
+          const y = Math.max(-18, Math.min(18, progress * strength * -140));
+          item.style.setProperty("--parallax-y", `${y.toFixed(2)}px`);
+        }
+        ticking = false;
+      };
+      const requestTick = () => {
+        if (!ticking) {
+          window.requestAnimationFrame(update);
+          ticking = true;
+        }
+      };
+      window.addEventListener("scroll", requestTick, { passive: true });
+      window.addEventListener("resize", requestTick);
+      update();
+    })();
+  </script>
 </body>
 </html>
