@@ -38,8 +38,9 @@ class IndexEditorialAtlasRestyleTest(unittest.TestCase):
 
     def test_all_existing_report_cards_survive_restyle(self):
         cards = re.findall(r'class="research-card"', self.html)
-        self.assertEqual(len(cards), 13)
+        self.assertEqual(len(cards), 14)
         for report in [
+            "breath-os-report.html",
             "fermentation-rituals-full-report.html",
             "music-telemetry-report.html",
             "ai-testosterone-report.html",

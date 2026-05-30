@@ -40,8 +40,9 @@ class IndexEditorialAtlasV2Test(unittest.TestCase):
             self.assertIn(copy, self.html)
 
     def test_existing_cards_are_preserved(self):
-        self.assertEqual(self.html.count('class="research-card"'), 13)
+        self.assertEqual(self.html.count('class="research-card"'), 14)
         for title in [
+            "Breath as Operating System",
             "Fermentation Rituals as Adaptive Protocols",
             "Music Is Not Taste. It Is Telemetry.",
             "AI × Testosterone: Unlocking Peak Performance",
